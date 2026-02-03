@@ -3,23 +3,18 @@ local Workspace = game:GetService("Workspace")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local player = Players.LocalPlayer
-local COLOR = Color3.fromRGB(255,255,255)
-local NAME = "ESP_Common"
 
--- Only add ESP if the block matches the rarity
+-- CONFIG: edit these only if needed
+local COLOR = Color3.fromRGB(255,255,255) -- White
+local RARITY = "Common"
+local NAME = "ESP_"..RARITY
+
 local function addESP(part)
-    local function getRarity(p)
-        if p.Parent and p.Parent.Name == "Common" then
-            return "Common"
-        end
-        return nil
-    end
-
-    local rarity = getRarity(part)
-    if not rarity then return end -- EXIT if not Common
-
-    -- Create Highlight
+    -- Only add ESP if the block matches the rarity
     if part:FindFirstChild(NAME) then return end
+    if not (part.Parent and part.Parent.Name == RARITY) then return end
+
+    -- Highlight
     local h = Instance.new("Highlight")
     h.Name = NAME
     h.FillColor = COLOR
@@ -28,7 +23,7 @@ local function addESP(part)
     h.Adornee = part
     h.Parent = part
 
-    -- Create Billboard
+    -- Billboard
     local g = Instance.new("BillboardGui")
     g.Name = NAME.."_GUI"
     g.Size = UDim2.new(0,140,0,30)
@@ -46,12 +41,12 @@ local function addESP(part)
     t.TextSize = 14
     t.Parent = g
 
-    -- Update distance and label
+    -- Update label with distance
     task.spawn(function()
         while part.Parent do
             if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                 local d = (part.Position - player.Character.HumanoidRootPart.Position).Magnitude
-                t.Text = rarity.."\n"..math.floor(d).."m"
+                t.Text = RARITY.."\n"..math.floor(d).."m"
             end
             task.wait(0.1)
         end
