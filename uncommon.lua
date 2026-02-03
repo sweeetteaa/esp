@@ -5,8 +5,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local player = Players.LocalPlayer
 
 -- CONFIG: edit these only if needed
-local COLOR = Color3.fromRGB(255,255,255) -- White
-local RARITY = "Common"
+local COLOR = Color3.fromRGB(0,255,0)
+local RARITY = "Uncommon"
 local NAME = "ESP_"..RARITY
 
 local function addESP(part)
